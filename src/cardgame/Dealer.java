@@ -1,5 +1,6 @@
 package cardgame;
 
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,7 +29,7 @@ public class Dealer {
      *   A list containing all cards, in a random order.
      */
     public static List<Card> getShuffledDeck() {
-        final List<Card> deck = new ArrayList<>();
+        final List<Card> deck = new ArrayList<Card>();
         // Add all cards to the deck, in order.
         for (Card.Suit suit : Card.Suit.values())
             for (Card.Number number : Card.Number.values())
@@ -58,17 +59,60 @@ public class Dealer {
         //   - Add cards to the hand, removing them from the deck.
         //   - Add the hand to the list of hands.
         // - Return the list of hands.
-        return null;
+
+        if(numPlayers * numCards > 52) {
+            try
+            {
+                throw new Exception("There are insufficient cards to deal evenly");
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        //NEW shuffled Deck
+        List<Card> shuffledDeck = getShuffledDeck();
+
+        //adds numPlayers amount of hands
+        List<List<Card>> hands = new ArrayList<List<Card>>();
+
+        int counterPlayers = 0;
+        int counterCards = 0;
+        while (counterPlayers < numPlayers){
+            List <Card> currentHandsCards = new ArrayList<Card>();
+
+            for (int i = shuffledDeck.size() - 1; i >= 0;){
+
+                while (counterCards < numCards){
+                    currentHandsCards.add(shuffledDeck.get(i));
+                    shuffledDeck.remove(i);
+                    counterCards ++;
+                    i --;
+                }
+                hands.add(currentHandsCards);
+                counterCards = 0;
+                counterPlayers ++;
+                break;
+            }
+        }
+
+
+        return hands;
     }
 
     public static void main(String[] args) {
         // Deal four 5-card hands, and print them out.
         List<List<Card>> hands = deal(4, 5);
         for (int h = 0; h < hands.size(); ++h) {
-            System.out.println("player " + h + " holds:");
+            System.out.println("player " + (h+1) + " holds:");
             for (Card c : hands.get(h))
                 System.out.println("  " + c);
         }
+
+        List<List<Card>> hands1 = deal(10, 6);
+
     }
 
 }
