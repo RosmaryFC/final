@@ -1,5 +1,7 @@
 package radiobutton;
 
+import java.util.HashMap;
+
 /**
  * Represents a group of "radio buttons": toggle buttons for which exactly one is selected
  * at a given time. If a different button is selected, the previously-selected button is
@@ -9,6 +11,9 @@ package radiobutton;
  * button group has 4 buttons, they are numbered 0, 1, 2, and 3.
  */
 public class RadioButtonGroup {
+
+    HashMap<Integer, Boolean> radioButtons;
+
 
     /**
      * Creates a group of radio buttons.
@@ -22,6 +27,20 @@ public class RadioButtonGroup {
      */
     public RadioButtonGroup(int numButtons, int initial) {
         // TODO: Implement this method.
+
+        if(initial > numButtons || initial < 1){
+            throw new RuntimeException("The initial button number is invalid");
+        }
+
+        radioButtons = new HashMap<Integer, Boolean>();
+        for(int i = 0; i < numButtons; i ++){
+
+            if(numButtons == initial){
+                radioButtons.put(i, true);
+            }else {
+                radioButtons.put(i, false);
+            }
+        }
     }
 
     /**
@@ -40,6 +59,9 @@ public class RadioButtonGroup {
      */
     public void select(int button) {
         // TODO: Implement this method.
+        for (int btn : radioButtons.)
+
+        radioButtons.put(button, true);
     }
 
     /**
